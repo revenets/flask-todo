@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit task</title>
+    <link rel="stylesheet" href="../static/style/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Edit task</h2>
+        <form action="{{ url_for('edit', pk=task.id) }}" method="post">
+            <div>
+                <p>New task title</p>
+                <input type="text" name="title" value="{{ task.title }}">
+                <p>New task description</p>
+                <input type="text" name="description" value="{{ task.description }}">
+                <br>
+                <button class="btn edit" type="submit">Edit</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

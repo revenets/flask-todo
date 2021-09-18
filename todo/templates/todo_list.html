@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do App</title>
+    <link rel="stylesheet" href="../static/style/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Welcome, {{ current_user.login }}</h2>
+            <a id="logout" href="{{ url_for('logout') }}">log out</a>
+        </div>
+
+        <h1>To-Do List</h1>
+        <div>
+            <a class="btn new-task" href="#popup">Add new task</a>
+        </div>
+        <div class="list">
+            <table class="table">
+                <tr>
+                    <th>Status</th>
+                    <th>Task title</th>
+                    <th>Task description</th>
+                    <th colspan="3"></th>
+                </tr>
+            {% for task in todo_list %}
+                <tr>
+                    {% if task.complete == False %}
+                        <td>
+                            <img style="width: 20px;" src="{{ url_for('static', filename='img/red_dot.png') }}">
+                        </td>
+                    {% else %}
+                        <td>
+                            <img style="width: 20px;" src="{{ url_for('static', filename='img/green_dot.png') }}">
+                        </td>
+                    {% endif %}
+                    {% if task.complete == False %}
+                        <td>{{ task }}</td>
+                        <td> {{ task.description }}</td>
+                    {% else %}
+                        <td><s>{{ task }}</s></td>
+                        <td><s>{{ task.description }}</s></td>
+                    {% endif %}
+                    <td class="table-btn"><a class="btn update" href="{{ url_for('update', pk=task.id) }}">Update</a></td>
+                    <td class="table-btn"><a class="btn delete" href="{{ url_for('delete', pk=task.id) }}">Delete</a></td>
+                    <td class="table-btn"><a class="btn edit" href="{{ url_for('edit_task', pk=task.id) }}">Edit</a></td>
+                <tr>
+            {% endfor  %}
+            </table>
+        </div>
+    </div>
+    <div id="popup" class="popup">
+        <a href="{{ url_for('index') }}" class="popup__area"></a>
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="{{ url_for('index') }}" class="popup__close">X</a>
+                <div class="popup__fill">
+                    <iframe src="{{ url_for('add_task') }}" frameborder="0" width="800" height="500"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
